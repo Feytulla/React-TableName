@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import Context from "../context";
+import PropTypes from 'prop-types';
 
 function ModalRemove() {
     const { closeModal, removeUser } = useContext(Context)
@@ -14,6 +15,11 @@ function ModalRemove() {
             </div>
         </>
     )
+}
+
+ModalRemove.propTypes = {
+    closeModal: PropTypes.func,
+    removeUser:  PropTypes.func,    
 }
 
 export default ModalRemove

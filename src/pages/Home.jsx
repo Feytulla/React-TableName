@@ -5,34 +5,25 @@ import ModalRemove from "../component/ModalRemove";
 import Context from "../context";
 import ModalRedakt from '..//component/ModalRedakt'
 
-let removeUserId;
-let redaktUserId;
 
 function Home() {
     const [users, setUsers] = useState([])
-    // const localStore = localStorage.getItem("users");
     const replaceBtn = document.querySelector('.modal-remove')
-    const modalRedakt = document.querySelector('.modal-redakt')
-    const [id, setId] = useState(redaktUserId)
-    const [userss, setUserss] = useState('Hello Home Page')
-    const [info, setInfo] = useState({})
-
-    const [openModal, setOpenModal] = useState(false)
-
-
-
-
+    const [redaktUserId, setRedaktUserId] = useState()
+    const [removeUserId, setRemoveUserId] = useState()
+    const [user, setUser] = useState({})
+    const [openRedakt, setOpenRedakt] = useState(false)
 
     useEffect(() => {
         setUsers(JSON.parse(localStorage.getItem("users")))
     }, [])
+
     useEffect(() => {
         localStorage.setItem('users', JSON.stringify(users))
     }, [users])
 
-
     function openModalRemove(event) {
-        removeUserId = event.target.dataset.id
+        setRemoveUserId(event.target.dataset.id)
         replaceBtn.style.display = "block";
 
         let replaceLeft =
@@ -46,6 +37,7 @@ function Home() {
 
         replaceBtn.style.left = replaceLeft + "px";
         replaceBtn.style.top = replaceTop + "px";
+
     }
 
     function removeUser() {
@@ -57,7 +49,6 @@ function Home() {
         )
         localStorage.setItem('users', JSON.stringify(users))
         replaceBtn.style.display = "none";
-
     }
 
     function closeModal() {
@@ -65,34 +56,28 @@ function Home() {
     }
 
     function openModalRedakt(event) {
-        setId(event.target.dataset.id)
-        setInfo(users[event.target.dataset.id])
-        // modalRedakt.style.display = "block";
-
-        setOpenModal(true)
-        
+        setRedaktUserId(event.target.dataset.id)
+        setUser(users[event.target.dataset.id])
+        setOpenRedakt(true)
     }
 
     function closeModalRedakt() {
-        setOpenModal(false)
+        setOpenRedakt(false)
     }
 
     function onCreate(userInfo) {
         setUsers(
             users.map((user, index) => {
-                if (index == id) {
+                if (index == redaktUserId) {
                     user = userInfo
                 }
                 return user
             })
         )
         localStorage.setItem('users', JSON.stringify(users))
-
     }
 
-
     return (
-
         <Context.Provider value={{ closeModal, removeUser }}>
             <div className='container'>
                 <div className='header d-flex justify-content-center align-items-center pt-5'>
@@ -118,9 +103,9 @@ function Home() {
                 </table>
                 <ModalRemove />
                 {
-                    openModal ? <ModalRedakt closeModalRedakt={closeModalRedakt} onCreate={onCreate} id={id} userss={userss} info={info} /> : null
+                    openRedakt ? <ModalRedakt closeModalRedakt={closeModalRedakt} onCreate={onCreate} user={user} /> : null
                 }
-                
+
             </div>
         </Context.Provider>
     )

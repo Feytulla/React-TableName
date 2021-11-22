@@ -8,7 +8,6 @@ function AddUser() {
     const [age, setAge] = useState('');
     const [users, setUsers] = useState([]);
 
-
     function submitHandler(e) {
         e.preventDefault()
 
@@ -26,24 +25,16 @@ function AddUser() {
             setName('')
             setSurname('')
             setAge('')
-
         }
     }
-const b = localStorage.getItem("users");
+
     useEffect(() => {
         if (localStorage.getItem("users")) {
-
-            let a = JSON.parse(localStorage.getItem("users"))
-            console.log(a.length)
-            console.log(users.length)
-            if (a.length !== users.length) {
-                console.log('da')
-                setUsers(
-                    users.concat(JSON.parse(localStorage.getItem("users")))
-                )
-            }
+            setUsers(
+                users.concat(JSON.parse(localStorage.getItem("users")))
+            )
         }
-    }, [b])
+    }, [])
 
     useEffect(() => {
         if (users.length) {
@@ -53,26 +44,24 @@ const b = localStorage.getItem("users");
 
 
     return (
-        <>
-            <div className="container d-flex justify-content-center align-items-center mt-5 pt-5">
-                <form className='col-3' onSubmit={submitHandler}>
-                    <div className="form-group">
-                        <label className='text-style mt-5 mb-2'>Ad</label>
-                        <input type="text" className="form-control" placeholder="Ad" value={name} onChange={e => setName(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                        <label className='text-style mt-4 mb-2'>Soyad</label>
-                        <input type="text" className="form-control" placeholder="Soyad" value={surname} onChange={e => setSurname(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                        <label className='text-style mt-4 mb-2'>Yaş</label>
-                        <input type="number" className="form-control" placeholder="Yaş" value={age} onChange={e => setAge(e.target.value)} />
-                    </div>
-                    <button type="submit" className="btn btn-success mt-4">Əlavə et</button>
-                    <Link to='/' className="btn btn-secondary mt-4 from-btn"> Geri qayıd </Link>
-                </form>
-            </div>
-        </>
+        <div className="container d-flex justify-content-center align-items-center mt-5 pt-5">
+            <form className='col-3' onSubmit={submitHandler}>
+                <div className="form-group">
+                    <label className='text-style mt-5 mb-2'>Ad</label>
+                    <input type="text" className="form-control" placeholder="Ad" value={name} onChange={e => setName(e.target.value)} />
+                </div>
+                <div className="form-group">
+                    <label className='text-style mt-4 mb-2'>Soyad</label>
+                    <input type="text" className="form-control" placeholder="Soyad" value={surname} onChange={e => setSurname(e.target.value)} />
+                </div>
+                <div className="form-group">
+                    <label className='text-style mt-4 mb-2'>Yaş</label>
+                    <input type="number" className="form-control" placeholder="Yaş" value={age} onChange={e => setAge(e.target.value)} />
+                </div>
+                <button type="submit" className="btn btn-success mt-4">Əlavə et</button>
+                <Link to='/' className="btn btn-secondary mt-4 from-btn"> Geri qayıd </Link>
+            </form>
+        </div>
     )
 }
 
